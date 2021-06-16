@@ -6,11 +6,19 @@ add_definitions("-DENABLE_SSE")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 ${SSE_FLAGS} -msse4")
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-
 find_package(OpenCV 4 REQUIRED)
-find_package(G2O REQUIRED)
 find_package(Sophus REQUIRED)
+
+# Find and set link of g2o
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+set(G2O_ROOT "../3rdparty/g2o")
+find_package(G2O REQUIRED)
+if(NOT G2O_FOUND)
+        message(FATAL_ERROR "G2O not found")
+else()
+        message(STATUS "Found g2o: ${G2O_INCLUDE_DIRS}")
+endif()
+link_directories(${G2O_INCLUDE_DIRS}/lib)
 
 include_directories(
         ${OpenCV_INCLUDE_DIRS}

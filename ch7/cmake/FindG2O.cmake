@@ -1,8 +1,7 @@
-#message(STATUS "G2O ROOT: ${G2O_ROOT}")
-
 # Find the header files
 
 find_path(G2O_INCLUDE_DIRS g2o/core/base_vertex.h
+  ${G2O_ROOT}
   ${G2O_ROOT}/include
   $ENV{G2O_ROOT}/include
   $ENV{G2O_ROOT}
@@ -14,7 +13,6 @@ find_path(G2O_INCLUDE_DIRS g2o/core/base_vertex.h
   NO_DEFAULT_PATH
   )
 
-message(STATUS "G2O include dir: ${G2O_INCLUDE_DIRS}")
 # Macro to unify finding both the debug and release versions of the
 # libraries; this is adapted from the OpenSceneGraph FIND_LIBRARY
 # macro.
