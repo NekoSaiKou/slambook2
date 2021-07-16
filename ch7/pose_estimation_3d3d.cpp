@@ -155,9 +155,6 @@ void find_feature_matches(const Mat &img_1, const Mat &img_2,
   // used in OpenCV3
   Ptr<FeatureDetector> detector = ORB::create();
   Ptr<DescriptorExtractor> descriptor = ORB::create();
-  // use this if you are in OpenCV2
-  // Ptr<FeatureDetector> detector = FeatureDetector::create ( "ORB" );
-  // Ptr<DescriptorExtractor> descriptor = DescriptorExtractor::create ( "ORB" );
   Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("BruteForce-Hamming");
   //-- 第一步:检测 Oriented FAST 角点位置
   detector->detect(img_1, keypoints_1);
@@ -252,6 +249,7 @@ void bundleAdjustment(
   const vector<Point3f> &pts2,
   Mat &R, Mat &t) {
   // 构建图优化，先设定g2o
+  //typedef g2o::BlockSolver_6_3 BlockSolverType; can be used here
   typedef g2o::BlockSolverX BlockSolverType;
   typedef g2o::LinearSolverDense<BlockSolverType::PoseMatrixType> LinearSolverType; // 线性求解器类型
   // 梯度下降方法，可以从GN, LM, DogLeg 中选
@@ -271,6 +269,7 @@ void bundleAdjustment(
   for (size_t i = 0; i < pts1.size(); i++) {
     EdgeProjectXYZRGBDPoseOnly *edge = new EdgeProjectXYZRGBDPoseOnly(
       Eigen::Vector3d(pts2[i].x, pts2[i].y, pts2[i].z));
+    cout << pts2[i].x << " " <<pts2[i].y << " " << pts2[i].z << endl;
     edge->setVertex(0, pose);
     edge->setMeasurement(Eigen::Vector3d(
       pts1[i].x, pts1[i].y, pts1[i].z));
