@@ -102,6 +102,15 @@ void Frontend::SetObservationsForKeyFrame() {
     }
 }
 
+/**
+ * @brief 
+ * @details If the keypoint in left image is not associated with any map point, that\n 
+ *          keypoint may be new point which isn't observed before. Therefore, we need\n
+ *          to create new map point, which isn't tracked before but can be observed in\n
+ *          both left and right image.
+ * 
+ * @return int 
+ */
 int Frontend::TriangulateNewPoints() {
     std::vector<SE3> poses{camera_left_->pose(), camera_right_->pose()};
     SE3 current_pose_Twc = current_frame_->Pose().inverse();
@@ -227,8 +236,12 @@ int Frontend::EstimateCurrentPose() {
     return features.size() - cnt_outlier;
 }
 
+/**
+ * @brief Use LK optical flow method to track map point in current left frame
+ * 
+ * @return int number of tracked points
+ */
 int Frontend::TrackLastFrame() {
-    // use LK flow to estimate points in the right image
     std::vector<cv::Point2f> kps_last, kps_current;
     for (auto &kp : last_frame_->features_left_) {
         if (kp->map_point_.lock()) {
