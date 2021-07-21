@@ -16,7 +16,8 @@
 #include <g2o/core/robust_kernel_impl.h>
 #include <g2o/core/solver.h>
 #include <g2o/core/sparse_optimizer.h>
-#include <g2o/solvers/csparse/linear_solver_csparse.h>
+#include <g2o/solvers/eigen/linear_solver_eigen.h>
+//#include <g2o/solvers/csparse/linear_solver_csparse.h>
 #include <g2o/solvers/dense/linear_solver_dense.h>
 
 namespace myslam {

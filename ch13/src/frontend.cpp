@@ -1,8 +1,11 @@
 //
 // Created by gaoxiang on 19-5-2.
 //
-
-#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/video/tracking.hpp>
 
 #include "myslam/algorithm.h"
 #include "myslam/backend.h"
@@ -305,7 +308,7 @@ int Frontend::DetectFeatures() {
     cv::Mat mask(current_frame_->left_img_.size(), CV_8UC1, 255);
     for (auto &feat : current_frame_->features_left_) {
         cv::rectangle(mask, feat->position_.pt - cv::Point2f(10, 10),
-                      feat->position_.pt + cv::Point2f(10, 10), 0, CV_FILLED);
+                      feat->position_.pt + cv::Point2f(10, 10), 0, cv::FILLED);
     }
 
     std::vector<cv::KeyPoint> keypoints;

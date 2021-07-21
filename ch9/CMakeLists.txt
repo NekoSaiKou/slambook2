@@ -28,7 +28,7 @@ include_directories(
         ${G2O_INCLUDE_DIRS}
         ${Sophus_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
-        ${CSPARSE_INCLUDE_DIR}
+        #${CSPARSE_INCLUDE_DIR}
 )
 
 add_library(bal_common common.cpp)
