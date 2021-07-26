@@ -5,6 +5,8 @@ set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-O3")
 
+cmake_policy(SET CMP0074 NEW)
+
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(G2O_ROOT "../3rdparty/g2o")
 find_package(G2O REQUIRED)
@@ -13,22 +15,16 @@ if(NOT G2O_FOUND)
 else()
         message(STATUS "Found g2o: ${G2O_INCLUDE_DIRS}")
 endif()
-link_directories(${G2O_INCLUDE_DIRS}/lib)
 
 Find_Package(Eigen3 REQUIRED)
 #Find_Package(Ceres REQUIRED)
 Find_Package(Sophus REQUIRED)
-#Find_Package(CSparse REQUIRED)
 
-message("" ${EIGEN3_INCLUDE_DIR})
-
-#SET(G2O_LIBS g2o_csparse_extension g2o_stuff g2o_core cxsparse)
-SET(G2O_LIBS g2o_stuff g2o_core)
+SET(G2O_LIBS ${G2O_CORE_LIBRARY} ${G2O_STUFF_LIBRARY})
 include_directories(
         ${G2O_INCLUDE_DIRS}
         ${Sophus_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIR}
-        #${CSPARSE_INCLUDE_DIR}
 )
 
 add_library(bal_common common.cpp)

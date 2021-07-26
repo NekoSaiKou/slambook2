@@ -7,6 +7,8 @@ set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_RELEASE  "-O3 -fopenmp -pthread")
 set(CMAKE_CXX_STANDARD 14)
 
+cmake_policy(SET CMP0074 NEW)
+
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
@@ -31,7 +33,6 @@ include_directories(${Sophus_INCLUDE_DIRS})
 set(G2O_ROOT "../3rdparty/g2o")
 find_package(G2O REQUIRED)
 include_directories(${G2O_INCLUDE_DIRS})
-link_directories(${G2O_INCLUDE_DIRS}/lib)
 
 # glog
 find_package(Glog REQUIRED)
@@ -47,8 +48,8 @@ include_directories(${GFLAGS_INCLUDE_DIRS})
 
 set(THIRD_PARTY_LIBS
         ${OpenCV_LIBS}
-        ${Pangolin_LIBRARIES} GL GLU GLEW #glut
-        g2o_core g2o_stuff g2o_types_sba
+        ${Pangolin_LIBRARIES} GL GLU GLEW
+        ${G2O_CORE_LIBRARY} ${G2O_STUFF_LIBRARY} ${G2O_TYPES_SBA}
         Sophus::Sophus
         # ${GTEST_BOTH_LIBRARIES}
         ${GLOG_LIBRARIES}

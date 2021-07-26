@@ -6,6 +6,8 @@ add_definitions("-DENABLE_SSE")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 ${SSE_FLAGS} -msse4")
 
+cmake_policy(SET CMP0074 NEW)
+
 find_package(OpenCV 4 REQUIRED)
 find_package(Sophus REQUIRED)
 
